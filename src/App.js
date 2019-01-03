@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      feedback:'',
       open: false,
       taskList: []
     };
@@ -30,10 +30,13 @@ class App extends Component {
     e.preventDefault();
 
     if(e.target.task.value === ''){
-        alert('Please type a new task');
+      this.setState({
+        feedback: 'This app is not able to save a task without a name. Please type a new task'
+      })
     } else {
       this.setState({
-        taskList: this.state.taskList.concat([{name: e.target.task.value, id: this.state.taskList.length + 1, completed: false, className: 'label--task'}])
+        taskList: this.state.taskList.concat([{name: e.target.task.value, id: this.state.taskList.length + 1, completed: false, className: 'label--task'}]),
+        feedback: ''
       });
     }
     this.openNewTask(e);
@@ -121,6 +124,7 @@ class App extends Component {
           </div>
           <div className="dates">
             <h1>Today</h1>
+            <h2>{this.state.feedback}</h2>
             <p>{today.toDateString()}</p>
           </div>
           <div className="tasks">
